@@ -43,6 +43,22 @@ window.Icons = (() => {
     target:
       '<circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/>',
     folder: '<path d="M3 7V4h7l2 3h9v14H3z"/>',
+    mic: '<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M6 10v1a6 6 0 0 0 12 0v-1M12 17v5M9 22h6"/>',
+    home: '<path d="m3 10 9-8 9 8v11h-7v-7h-4v7H3z"/>',
+    restaurant:
+      '<path d="M3 2v7a3 3 0 0 0 6 0V2M6 2v20M17 2c-3 3-4 8-1 10h3V2zm2 10v10"/>',
+    coffee:
+      '<path d="M3 4h14v10a6 6 0 0 1-12 0V4M17 5h2a3 3 0 0 1 0 6h-2M2 22h18"/>',
+    hotel:
+      '<path d="M2 5v17M22 11v11M2 18h20M2 14h20v-3H11v7M6 8a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z"/>',
+    shopping:
+      '<rect x="3" y="7" width="18" height="15" rx="2"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/>',
+    layers: '<path d="m12 2 10 6-10 6L2 8zM2 13l10 6 10-6M2 18l10 6 10-6"/>',
+    compass: '<circle cx="12" cy="12" r="9"/><path d="m16 8-2 6-6 2 2-6z"/>',
+    bookmark: '<path d="M6 3h12v19l-6-4-6 4z"/>',
+    share:
+      '<circle cx="5" cy="12" r="3"/><circle cx="19" cy="4" r="3"/><circle cx="19" cy="20" r="3"/><path d="m8 11 8-5M8 13l8 5"/>',
+    contribute: '<circle cx="12" cy="12" r="9"/><path d="M12 6v12M6 12h12"/>',
   };
   const icon = (name, cls = "") =>
     `<svg class="icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.info}</svg>`;
@@ -50,5 +66,7 @@ window.Icons = (() => {
     '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0f9d58" d="m8 2 5 8-7 12-5-8z"/><path fill="#fbbc04" d="M8 2h9l7 12h-10z"/><path fill="#4285f4" d="m6 22 5-8h13l-5 8z"/></svg>';
   const doc = (type = "doc") =>
     `<svg class="file-icon" viewBox="0 0 32 38" aria-hidden="true"><path fill="${type === "sheet" ? "#0f9d58" : type === "pdf" ? "#ea4335" : "#4285f4"}" d="M3 0h18l11 11v24a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V3a3 3 0 0 1 3-3"/><path fill="#fff" opacity=".35" d="M21 0v11h11"/><path stroke="#fff" stroke-width="2" d="M7 19h18M7 24h18M7 29h12"/></svg>`;
-  return { icon, drive, doc };
+  const maps =
+    '<svg class="icon maps-logo" viewBox="0 0 24 32" aria-hidden="true"><path fill="#34a853" d="M12 32c-2-6-12-14-12-20a12 12 0 0 1 24 0c0 6-10 14-12 20Z"/><path fill="#4285f4" d="M3 4a12 12 0 0 1 18 0l-6 8-7 5-8-5a12 12 0 0 1 3-8Z"/><path fill="#fbbc04" d="m0 12 7 5 5 15C8 23 0 18 0 12Z"/><path fill="#ea4335" d="M3 4a12 12 0 0 1 9-4v8L7 12Z"/><circle cx="12" cy="12" r="5" fill="white"/></svg>';
+  return { icon, drive, doc, maps };
 })();

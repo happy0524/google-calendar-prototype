@@ -38,25 +38,33 @@ window.DemoMap = (() => {
     [471, 510, 75, 55],
     [563, 510, 100, 56],
   ];
-  function markup(place) {
+  function markup(place, variant = "embedded") {
+    const app = variant === "app";
     const main = escape(place.short || place.name);
-    return `<div class="map-wrap">
-      <div class="map-viewport" id="demo-map" role="region" aria-label="${escape(place.name)} 지도. 드래그하여 이동할 수 있습니다.">
+    return `<div class="map-wrap${app ? " maps-map" : ""}">
+      <div class="map-viewport" id="demo-map" data-variant="${variant}" role="region" aria-label="${escape(place.name)} 지도. 드래그하여 이동할 수 있습니다.">
         <div class="map-world" id="map-world">
-          <svg class="map-svg" viewBox="0 0 800 600" aria-hidden="true">
-            <rect width="800" height="600" fill="#ecebe7"/>
+          <svg class="map-svg" viewBox="${app ? "-200 -300 1200 1200" : "0 0 800 600"}" aria-hidden="true">
+            <rect x="-200" y="-300" width="1200" height="1200" fill="#f2f4f3"/>
+            <path d="M-200-100h1200M-200 0h1200M-200 650h1200M-150-300v1200M900-300v1200" stroke="#d8dfe4" stroke-width="20" fill="none"/>
+            <path d="M-200-100h1200M-200 0h1200M-200 650h1200M-150-300v1200M900-300v1200" stroke="#fff" stroke-width="14" fill="none"/>
+            <path d="M-240 680c240-160 380 160 640 130S780 650 1050 770" stroke="#8db3ce" stroke-width="114" fill="none"/><path d="M-240 680c240-160 380 160 640 130S780 650 1050 770" stroke="#9edfee" stroke-width="100" fill="none"/>
+            <path d="M-100-210h280v130h-280zM660-170h200V-20H660zM15 598h240v65H15z" fill="#c7eed8"/>
+            <path d="M-100 615 950 850M-160 500 780-200" stroke="#cbd4dc" stroke-width="11" fill="none"/>
+            <path d="M-100 615 950 850M-160 500 780-200" stroke="#fff" stroke-width="6" fill="none"/>
+            <rect width="800" height="600" fill="#f1f3f4"/>
             <path d="M0 50h800M0 580h800M50 0v600M742 0v600" stroke="#fff" stroke-width="22"/>
             <path d="M75 0v600M695 0v600M0 168h800M0 390h800M0 489h800M196 0v600M296 0v600M454 0v600M550 0v600" stroke="#fff" stroke-width="13"/>
             <path d="M399-20c-8 91-10 163 0 247s15 197 0 393" stroke="#d9c7a0" stroke-width="38" fill="none"/>
             <path d="M399-20c-8 91-10 163 0 247s15 197 0 393" stroke="#fff3ce" stroke-width="31" fill="none"/>
             <path d="M-30 280c144 11 219-1 339 0s354 17 520-1" stroke="#dedbd3" stroke-width="25" fill="none"/>
             <path d="M-30 280c144 11 219-1 339 0s354 17 520-1" stroke="#fff" stroke-width="20" fill="none"/>
-            ${blocks.map(([x, y, w, h], i) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${i % 4 === 0 ? "#e4e1db" : "#e1dfda"}" stroke="#d6d3cd" stroke-width="1"/>`).join("")}
-            <path d="M317 19h60v128h-60zM563 19h101v46H563z" fill="#c8dfba" stroke="#b9d5a9"/>
-            <path d="M13 305h46v173H13zM576 324h80v37h-80z" fill="#d2e5c5"/>
-            <rect x="308" y="189" width="66" height="70" rx="4" fill="#d0e3bf" stroke="#bed6aa"/>
+            ${blocks.map(([x, y, w, h], i) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${i % 4 === 0 ? "#e2e7e5" : "#e7ebe9"}" stroke="#d8dfdd" stroke-width="1"/>`).join("")}
+            <path d="M317 19h60v128h-60zM563 19h101v46H563z" fill="#c6edd8" stroke="#b3dfc7"/>
+            <path d="M13 305h46v173H13zM576 324h80v37h-80z" fill="#ccecd9"/>
+            <rect x="308" y="189" width="66" height="70" rx="4" fill="#c4e9d3" stroke="#aedac0"/>
             <path d="m315 247 17-22 32-18m-33 18 25 27" stroke="#eaf0df" stroke-width="3" fill="none"/>
-            <rect x="317" y="511" width="60" height="54" rx="3" fill="#d2e5c5"/>
+            <rect x="317" y="511" width="60" height="54" rx="3" fill="#ccecd9"/>
             <rect x="416" y="228" width="25" height="34" rx="3" fill="#d2dce8" stroke="#b6c8df"/>
             <path d="M421 230v30M426 230v30M431 230v30M436 230v30" stroke="#b7c7db" stroke-width="1"/>
             <g font-family="Arial,Apple SD Gothic Neo,sans-serif" font-size="10" fill="#878681" text-anchor="middle">
@@ -73,6 +81,8 @@ window.DemoMap = (() => {
               <path id="map-route-line" d="M288 452 288 390 401 390 405 281 420 281" fill="none" stroke="#4285f4" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 8"/>
               <circle cx="288" cy="452" r="7" fill="#4285f4" stroke="white" stroke-width="3"/>
             </g>
+            <g class="map-transit-lines" style="display:none" fill="none" stroke-width="3" opacity=".8"><path d="M-200 510 200 480 405 390 800 100" stroke="#9c5db7"/><path d="M-100 80 196 168 296 390 550 489 1000 520" stroke="#4d9dc8"/><path d="M-150 350 296 280 550 168 1000 200" stroke="#6aa968"/></g>
+            ${app ? '<g class="maps-current-location" transform="translate(288 452)"><path d="M0 0-25-44a51 51 0 0 1 50 0Z" fill="#4285f4" opacity=".15"/><circle r="14" fill="#4285f4" opacity=".12"/><circle r="7" fill="#4285f4" stroke="white" stroke-width="3"/></g>' : ""}
             <g font-family="Arial,Apple SD Gothic Neo,sans-serif" text-anchor="middle"><rect x="${420 - Math.min(main.length * 5.5, 105) / 2}" y="288" width="${Math.min(main.length * 5.5, 105)}" height="20" rx="4" fill="white" opacity=".94"/><text x="420" y="302" fill="#b43c31" font-size="11" font-weight="600">${main}</text></g>
             <g transform="translate(279 454)"><rect width="17" height="17" rx="4" fill="#b98a2d"/><text x="8.5" y="12" fill="white" font-size="10" text-anchor="middle">6</text></g>
             <text x="300" y="467" fill="#717474" font-family="Arial,Apple SD Gothic Neo,sans-serif" font-size="10">${escape(place.origin)}</text>
@@ -81,10 +91,9 @@ window.DemoMap = (() => {
         </div>
         <button class="map-recenter" data-action="map-reset" aria-label="지도 중심으로 이동">${Icons.icon("target")}</button>
         <div class="map-controls"><button data-action="map-zoom-in" aria-label="지도 확대">${Icons.icon("plus")}</button><button data-action="map-zoom-out" aria-label="지도 축소">${Icons.icon("minus")}</button></div>
-        <div class="map-wordmark">Google</div><div class="map-disclaimer">100m ━━━</div>
+        <div class="map-wordmark">${app ? "Google Maps" : "Google"}</div><div class="map-disclaimer">100m ━━━</div>
       </div>
-      <div class="map-actions"><span class="map-hint">드래그하여 이동 · 핀을 눌러 장소 확인</span><button class="text-button outlined-button" data-action="directions">${Icons.icon("route")}길찾기</button></div>
-      <div id="place-info"></div><div id="route-info"></div>
+      ${app ? "" : `<div class="map-actions"><span class="map-hint">드래그하여 이동 · 핀을 눌러 장소 확인</span><button class="text-button outlined-button" data-action="directions">${Icons.icon("route")}길찾기</button></div><div id="place-info"></div><div id="route-info"></div>`}
     </div>`;
   }
   let view = null;
@@ -95,8 +104,9 @@ window.DemoMap = (() => {
       return;
     }
     const world = viewport.querySelector(".map-world");
-    view = { zoom: 0.95, x: 0, y: 0, world, viewport };
-    update();
+    const app = viewport.dataset.variant === "app";
+    view = { zoom: 0.95, x: 0, y: 0, world, viewport, app };
+    reset();
     let drag = null;
     viewport.addEventListener("pointerdown", (e) => {
       if (e.target.closest("button")) return;
@@ -123,15 +133,31 @@ window.DemoMap = (() => {
   }
   function zoom(delta) {
     if (view) {
-      view.zoom = Math.max(0.75, Math.min(2, view.zoom + delta));
+      view.zoom = Math.max(
+        view.app ? 0.4 : 0.6,
+        Math.min(2, view.zoom + delta),
+      );
       update();
     }
   }
   function reset() {
     if (view) {
       view.x = 0;
-      view.y = 0;
       view.zoom = 0.95;
+      view.y = 0;
+      if (view.app) {
+        const mapBox = view.viewport.getBoundingClientRect();
+        const panel = document.querySelector(".maps-bottom-panel");
+        const top = document.querySelector(".maps-screen.is-routing")
+          ? 136
+          : 183;
+        const bottom = panel
+          ? panel.getBoundingClientRect().top - mapBox.top - 10
+          : mapBox.height - 80;
+        // Center the selected pin in the usable map area, above the bottom sheet.
+        view.y =
+          (top + bottom) / 2 + (43 / 2 + 22) * view.zoom - mapBox.height / 2;
+      }
       update();
     }
   }
@@ -144,5 +170,30 @@ window.DemoMap = (() => {
         .setAttribute("stroke-dasharray", mode === "walk" ? "1 8" : "none");
     }
   }
-  return { markup, attach, zoom, reset, route };
+  function fitRoute() {
+    if (!view) return;
+    const mapBox = view.viewport.getBoundingClientRect();
+    const panel = document.querySelector(".maps-bottom-panel");
+    // Reserve room above the route endpoint for the visible pin and Maps search bar.
+    const top = view.app ? (mapBox.height < 560 ? 140 : 160) : 36;
+    const bottom =
+      view.app && panel
+        ? panel.getBoundingClientRect().top - mapBox.top - 12
+        : mapBox.height - 16;
+    view.zoom = Math.max(
+      view.app ? 0.4 : 0.6,
+      Math.min(0.95, (bottom - top - 24) / 174),
+    );
+    view.x = (400 - 354) * view.zoom;
+    view.y = (top + bottom) / 2 - mapBox.height / 2 - 65 * view.zoom;
+    update();
+  }
+  function layers() {
+    const lines = document.querySelector(".map-transit-lines");
+    if (!lines) return false;
+    const show = lines.style.display === "none";
+    lines.style.display = show ? "" : "none";
+    return show;
+  }
+  return { markup, attach, zoom, reset, route, fitRoute, layers };
 })();

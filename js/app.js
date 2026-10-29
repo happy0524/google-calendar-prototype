@@ -69,6 +69,7 @@
   state.settings = { offline: false, auto: false, interval: 30 };
   let screen = "calendar";
   let activeFileId = null;
+  let mapsSaved = false;
   let currentId = null;
   let modal = null;
   let focusBeforeModal = null;
@@ -188,7 +189,7 @@
     screen = "detail";
     const place = placeOf(event);
     $("#app").innerHTML =
-      `<div class="detail-screen">${offlineBanner()}<div class="detail-hero"><div class="detail-topbar"><button class="icon-button glass-button" data-action="back" aria-label="일정 상세 닫기">${icon("close")}</button><div class="action-pill"><button class="icon-button" data-action="edit-event" aria-label="일정 수정">${icon("edit")}</button><button class="icon-button" data-action="event-menu" aria-label="일정 더보기">${icon("more")}</button></div></div></div><article class="detail-card"><div class="detail-row"><span class="event-color-square" style="background:${esc(event.color || "#039be5")}"></span><div><h1 class="detail-title">${esc(event.title)}</h1><p class="detail-date">${prettyDate(event.date)}<br>${event.allDay ? "종일" : `${shortTime(event.start)} – ${shortTime(event.end)}`}</p></div></div>${place ? `<div class="detail-row location-row">${icon("pin")}<div><h2 class="location-name">${esc(place.name)}</h2><p class="secondary">${esc(place.address)}</p>${improved ? DemoMap.markup(place) : `<button class="text-button outlined-button external-map-link" data-action="open-maps">${icon("pin")}지도에서 열기${icon("chevron")}</button>`}</div></div>` : ""}<div class="detail-row">${icon("people")}<div><p class="detail-row-title">${(event.guests || []).length ? `참석자 ${event.guests.length + 1}명` : "참석자"}</p>${event.guests?.length ? `<div class="guest-list">${event.guests.map((name) => `<span class="guest-chip"><span class="guest-avatar">${esc(name.slice(0, 1))}</span>${esc(name)}</span>`).join("")}</div><p class="tiny-label">나 · 주최자</p>` : '<p class="secondary">나 · 주최자</p>'}</div></div><div class="detail-row">${icon("bell")}<div><p class="detail-row-title">${event.reminder ?? 30}분 전</p>${event.secondaryReminder ? `<p class="secondary">${esc(event.secondaryReminder)}</p>` : ""}</div></div><div class="detail-row">${icon("video")}<div>${event.meet ? `<button class="meet-label" data-action="meet">Google Meet으로 참여하기</button><p class="meet-code">meet.google.com/abc-demo-swe</p>` : '<p class="detail-row-title">화상 회의 없음</p>'}</div></div>${event.description ? `<div class="detail-row">${icon("text")}<p class="detail-description">${esc(event.description)}</p></div>` : ""}<div class="detail-row">${icon("clip")}<div class="attachment-section"><p class="detail-row-title">첨부파일</p><div id="attachment-list">${(event.attachments || []).map(attachmentMarkup).join("")}</div><button class="attachment-add" data-action="drive">${drive}Google Drive에서 첨부</button></div></div><div class="detail-row calendar-owner"><span class="avatar-inner">김</span><div><p class="detail-row-title">${esc(event.calendar || "김민서")}</p><p class="secondary">${event.calendar ? "휴일 캘린더" : "내 캘린더 · 기본 공개 상태"}</p></div></div></article></div>`;
+      `<div class="detail-screen${improved && place ? " calendar-map-context" : ""}">${offlineBanner()}<div class="detail-hero"><div class="detail-topbar"><button class="icon-button glass-button" data-action="back" aria-label="일정 상세 닫기">${icon("close")}</button><div class="action-pill"><button class="icon-button" data-action="edit-event" aria-label="일정 수정">${icon("edit")}</button><button class="icon-button" data-action="event-menu" aria-label="일정 더보기">${icon("more")}</button></div></div></div><article class="detail-card"><div class="detail-row"><span class="event-color-square" style="background:${esc(event.color || "#039be5")}"></span><div><h1 class="detail-title">${esc(event.title)}</h1><p class="detail-date">${prettyDate(event.date)}<br>${event.allDay ? "종일" : `${shortTime(event.start)} – ${shortTime(event.end)}`}</p></div></div>${place ? `<div class="detail-row location-row">${icon("pin")}<div>${improved ? `<h2 class="location-name">${esc(place.name)}</h2>` : `<button class="location-name location-open-link" data-action="open-maps" aria-label="${esc(place.name)} 지도에서 열기">${esc(place.name)}</button>`}<p class="secondary">${esc(place.address)}</p>${improved ? DemoMap.markup(place) : `<button class="text-button outlined-button external-map-link" data-action="open-maps">${icon("pin")}지도에서 열기${icon("chevron")}</button>`}</div></div>` : ""}<div class="detail-row">${icon("people")}<div><p class="detail-row-title">${(event.guests || []).length ? `참석자 ${event.guests.length + 1}명` : "참석자"}</p>${event.guests?.length ? `<div class="guest-list">${event.guests.map((name) => `<span class="guest-chip"><span class="guest-avatar">${esc(name.slice(0, 1))}</span>${esc(name)}</span>`).join("")}</div><p class="tiny-label">나 · 주최자</p>` : '<p class="secondary">나 · 주최자</p>'}</div></div><div class="detail-row">${icon("bell")}<div><p class="detail-row-title">${event.reminder ?? 30}분 전</p>${event.secondaryReminder ? `<p class="secondary">${esc(event.secondaryReminder)}</p>` : ""}</div></div><div class="detail-row">${icon("video")}<div>${event.meet ? `<button class="meet-label" data-action="meet">Google Meet으로 참여하기</button><p class="meet-code">meet.google.com/abc-demo-swe</p>` : '<p class="detail-row-title">화상 회의 없음</p>'}</div></div>${event.description ? `<div class="detail-row">${icon("text")}<p class="detail-description">${esc(event.description)}</p></div>` : ""}<div class="detail-row">${icon("clip")}<div class="attachment-section"><p class="detail-row-title">첨부파일</p><div id="attachment-list">${(event.attachments || []).map(attachmentMarkup).join("")}</div><button class="attachment-add" data-action="drive">${drive}Google Drive에서 첨부</button></div></div><div class="detail-row calendar-owner"><span class="avatar-inner">김</span><div><p class="detail-row-title">${esc(event.calendar || "김민서")}</p><p class="secondary">${event.calendar ? "휴일 캘린더" : "내 캘린더 · 기본 공개 상태"}</p></div></div></article></div>`;
     DemoMap.attach(markInteraction);
     $(".detail-screen").scrollTop = detailScroll;
     publishView();
@@ -209,10 +210,50 @@
     detailScroll = $(".detail-screen")?.scrollTop || 0;
     screen = "maps";
     const place = placeOf(currentEvent());
-    $("#app").innerHTML =
-      `<div class="external-screen maps-screen">${offlineBanner()}<header class="external-appbar"><button class="return-calendar" data-action="return-calendar">${icon("back")}캘린더로 돌아가기</button><span>Google Maps</span></header><div class="maps-scroll"><div class="external-brand">${icon("pin")}<h1>Google Maps</h1></div>${DemoMap.markup(place)}</div></div>`;
+    $("#app").innerHTML = `
+      <div class="external-screen maps-screen maps-fullscreen" aria-label="Google Maps">
+        ${offlineBanner()}
+        ${DemoMap.markup(place, "app")}
+        <div class="external-appbar maps-return-crumb"><button class="return-calendar" data-action="return-calendar">${icon("back")}캘린더로 돌아가기</button></div>
+        <form class="maps-searchbar" id="maps-search-form" role="search">
+          ${Icons.maps}<input id="maps-search" type="search" placeholder="여기서 검색" aria-label="지도에서 장소 검색" autocomplete="off">
+          <button type="button" class="maps-search-mic" data-action="maps-voice" aria-label="음성 검색">${icon("mic")}</button>
+          <button type="button" class="avatar" data-action="account" aria-label="Google 계정"><span class="avatar-inner">김</span></button>
+        </form>
+        <nav class="maps-categories" aria-label="주변 장소 종류">
+          ${[
+            ["home", "집 설정"],
+            ["restaurant", "음식점"],
+            ["coffee", "커피"],
+            ["hotel", "호텔"],
+            ["shopping", "쇼핑"],
+          ]
+            .map(
+              ([symbol, label]) =>
+                `<button data-action="maps-category" data-category="${symbol}" aria-pressed="false">${icon(symbol)}${label}</button>`,
+            )
+            .join("")}
+        </nav>
+        <button class="maps-layer-button maps-round-control" data-action="maps-layers" aria-label="대중교통 지도 레이어" aria-pressed="false">${icon("layers")}</button>
+        <button class="maps-compass maps-round-control" data-action="maps-compass" aria-label="북쪽을 위로 지도 초기화"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#e35d5d" d="m12 3 5 9H7z"/><path fill="#a1a7aa" d="m12 21-5-9h10z"/></svg></button>
+        <button class="maps-directions-fab" data-action="directions" aria-label="길찾기">${icon("route")}</button>
+        <section class="maps-bottom-panel" aria-label="장소 정보" id="maps-place-panel">
+          <button class="maps-panel-handle" data-action="maps-panel" aria-label="장소 정보 패널 펼치기" aria-expanded="false"><span></span></button>
+          <div class="maps-panel-content"><div id="place-info"></div><div id="route-info"></div></div>
+          <div class="maps-place-actions">
+            <button class="maps-directions-button" data-action="directions">${icon("route")}경로</button>
+            <button data-action="maps-save" aria-pressed="${mapsSaved}">${icon(mapsSaved ? "check" : "bookmark")}<span>${mapsSaved ? "저장됨" : "저장"}</span></button>
+            <button data-action="maps-share">${icon("share")}공유</button>
+          </div>
+        </section>
+        <nav class="maps-bottom-nav" aria-label="Google Maps 탐색">
+          <button class="active" data-action="maps-tab" data-tab="explore" aria-current="page"><span>${icon("pin")}</span>탐색</button>
+          <button data-action="maps-tab" data-tab="saved"><span>${icon("bookmark")}</span>내 페이지</button>
+          <button data-action="maps-tab" data-tab="contribute"><span>${icon("contribute")}</span>참여</button>
+        </nav>
+      </div>`;
     DemoMap.attach(markInteraction);
-    showPlace();
+    showPlace(false);
     publishView();
   }
   function openExternalDrive(id, rememberScroll = true) {
@@ -535,10 +576,18 @@
     renderDetail();
     toast("일정을 저장했어요.");
   }
-  function showPlace() {
+  function showPlace(expand = true) {
     const place = placeOf(currentEvent());
     if (!place) return;
     markInteraction();
+    if (screen === "maps") {
+      $(".maps-screen").classList.remove("is-routing");
+      $(".maps-bottom-panel").classList.toggle("is-expanded", expand);
+      $(".maps-panel-handle").setAttribute("aria-expanded", String(expand));
+      $("#place-info").hidden = false;
+      $("#route-info").innerHTML = "";
+      $(".maps-place-actions").hidden = false;
+    }
     $("#place-info").innerHTML =
       `<div class="place-card"><div class="place-card-head"><h3>${esc(place.name)}</h3><button class="icon-button" data-action="close-place" aria-label="장소 정보 닫기">${icon("close")}</button></div><p class="rating">${place.rating} <span class="stars">★★★★★</span> <span>(${place.reviews})</span></p><p class="secondary">${esc(place.category)}<br>${esc(place.address)}</p><p class="place-review">“${esc(place.review || "안내가 잘 되어 있어 찾기 쉬워요.")}”<span>김** · 2주 전</span></p></div>`;
   }
@@ -546,6 +595,14 @@
     const place = placeOf(currentEvent());
     if (!place) return;
     markInteraction();
+    if (screen === "maps") {
+      $(".maps-screen").classList.add("is-routing");
+      $(".maps-bottom-panel").classList.remove("is-expanded");
+      $(".maps-panel-handle").setAttribute("aria-expanded", "false");
+      $("#place-info").hidden = true;
+      $(".maps-place-actions").hidden = true;
+      $("#maps-search").value = place.name;
+    }
     DemoMap.route(mode);
     $("#route-info").innerHTML =
       `<section class="route-panel" aria-label="길찾기"><p class="route-origin">${esc(place.origin)}<br>↓ <strong>${esc(place.name)}</strong></p><div class="transport-tabs">${[
@@ -560,7 +617,10 @@
         .join(
           "",
         )}</div><p class="route-result"><strong>${place[mode]}분</strong> ${mode === "walk" ? "약 750m · 큰길 따라 이동" : mode === "transit" ? "버스 1개 노선 · 도보 포함" : "약 1.2km · 일반 도로"}</p></section>`;
-    $("#route-info").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    DemoMap.fitRoute();
+    if (screen === "maps") $(".maps-panel-content").scrollTop = 0;
+    else
+      $("#route-info").scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
   function openDrive() {
     markInteraction();
@@ -713,6 +773,7 @@
     detailScroll = 0;
     currentId = null;
     state = freshState();
+    mapsSaved = false;
     save();
     closeModal(false);
     activeFileId = null;
@@ -801,9 +862,83 @@
       DemoMap.reset();
       markInteraction();
     },
-    "map-pin": showPlace,
+    "map-pin": () => showPlace(true),
     "close-place": () => {
-      $("#place-info").innerHTML = "";
+      if (screen === "maps") showPlace(false);
+      else $("#place-info").innerHTML = "";
+    },
+    "maps-panel": () => {
+      const panel = $(".maps-bottom-panel");
+      const expanded = panel.classList.toggle("is-expanded");
+      $(".maps-panel-handle").setAttribute("aria-expanded", String(expanded));
+      if ($(".maps-screen").classList.contains("is-routing"))
+        DemoMap.fitRoute();
+    },
+    "maps-compass": () => {
+      DemoMap.reset();
+      markInteraction();
+    },
+    "maps-layers": (button) => {
+      const visible = DemoMap.layers();
+      button.setAttribute("aria-pressed", String(visible));
+    },
+    "maps-voice": () =>
+      openModal({
+        type: "info",
+        title: "음성 검색",
+        text: "검색창에서 장소 이름을 입력해 보세요.",
+        symbol: "mic",
+      }),
+    "maps-category": (button) => {
+      if (button.dataset.category === "home") {
+        openModal({
+          type: "info",
+          title: "집 설정",
+          text: "Google 계정에 집 주소를 저장하면 쉽게 찾을 수 있어요.",
+          symbol: "home",
+        });
+        return;
+      }
+      document
+        .querySelectorAll(".maps-categories button")
+        .forEach((item) =>
+          item.setAttribute("aria-pressed", String(item === button)),
+        );
+      toast(`${button.textContent.trim()} 장소를 선택했어요.`);
+    },
+    "maps-save": (button) => {
+      mapsSaved = !mapsSaved;
+      button.setAttribute("aria-pressed", String(mapsSaved));
+      button.innerHTML = `${icon(mapsSaved ? "check" : "bookmark")}<span>${mapsSaved ? "저장됨" : "저장"}</span>`;
+    },
+    "maps-share": () =>
+      openModal({
+        type: "info",
+        title: placeOf(currentEvent()).name,
+        text: placeOf(currentEvent()).address,
+        symbol: "share",
+      }),
+    "maps-tab": (button) => {
+      if (button.dataset.tab === "explore") {
+        showPlace(false);
+        return;
+      }
+      if (button.dataset.tab === "saved")
+        openModal({
+          type: "info",
+          title: "내 페이지",
+          text: mapsSaved
+            ? `저장한 장소 · ${placeOf(currentEvent()).name}`
+            : "저장한 장소가 없습니다.",
+          symbol: "bookmark",
+        });
+      else
+        openModal({
+          type: "info",
+          title: "참여",
+          text: "방문한 장소의 경험을 공유해 보세요.",
+          symbol: "contribute",
+        });
     },
     directions: () => showDirections(),
     "route-mode": (button) => showDirections(button.dataset.mode),
@@ -893,6 +1028,15 @@
     actions[action]?.(button);
   });
   document.addEventListener("submit", (event) => {
+    if (event.target.id === "maps-search-form") {
+      event.preventDefault();
+      const query = $("#maps-search").value.trim();
+      const place = placeOf(currentEvent());
+      if (!query || `${place.name} ${place.address}`.includes(query))
+        showPlace();
+      else toast("이 지도에 표시된 장소 이름으로 검색해 주세요.");
+      return;
+    }
     if (event.target.id === "event-form") {
       event.preventDefault();
       saveEvent(event.target);
