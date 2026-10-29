@@ -1,0 +1,410 @@
+/* 바깥 비교 화면. 앱 UI는 styles.css / embedded.css에서 수정합니다. */
+.comparison-page {
+  --frame-height: min(850px, calc(100svh - 136px));
+  background: #f5f6f8;
+  min-height: 100svh;
+  padding: 20px 28px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+.comparison-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  min-height: 33px;
+  flex-shrink: 0;
+}
+.comparison-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.comparison-brand h1 {
+  font-size: 17px;
+  font-weight: 550;
+  letter-spacing: -0.5px;
+}
+.comparison-brand h1 span {
+  font-size: 12px;
+  font-weight: 400;
+  color: #9399a2;
+  margin-left: 12px;
+  letter-spacing: 0;
+}
+.simulation-label {
+  font-size: 10px;
+  color: #9299a3;
+  margin-left: auto;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.simulation-label i {
+  width: 5px;
+  height: 5px;
+  background: #9aa3b1;
+  border-radius: 50%;
+}
+.reset-button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #dce1e8;
+  padding: 8px 11px;
+  background: #fff;
+  border-radius: 8px;
+  font-size: 11px;
+  color: #707987;
+}
+.reset-button .icon {
+  width: 15px;
+  height: 15px;
+}
+.reset-button:hover {
+  background: #edf2f9;
+}
+.comparison-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 414px) minmax(0, 414px) 216px;
+  gap: 34px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+  flex-shrink: 0;
+}
+.phone-column {
+  min-width: 0;
+}
+.phone-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 5px 12px;
+  min-height: 24px;
+}
+.mode-tag {
+  font-size: 10px;
+  line-height: 1.4;
+  font-weight: 650;
+  border: 1px solid #dce0e7;
+  border-radius: 5px;
+  background: #fff;
+  color: #68717e;
+  padding: 4px 6px;
+  white-space: nowrap;
+}
+.improved-tag {
+  background: #e8f0fe;
+  color: #1967d2;
+  border-color: #d6e4fc;
+}
+.phone-heading h2 {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+.app-location {
+  font-size: 9px;
+  margin-left: auto;
+  color: #9aa2ad;
+  white-space: nowrap;
+}
+.app-location.is-external {
+  color: #188038;
+}
+.phone-shell {
+  height: var(--frame-height);
+  width: 100%;
+  border: 6px solid #fff;
+  border-radius: 37px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px #dfe4ec,
+    0 18px 38px -24px #27314330;
+  position: relative;
+  isolation: isolate;
+}
+.phone-shell > iframe {
+  display: block;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+}
+.comparison-controls {
+  padding: 0 0 0 2px;
+  font-size: 12px;
+  min-width: 0;
+}
+.panel-heading {
+  font-size: 11px;
+  font-weight: 500;
+  color: #9ba3ae;
+  margin-bottom: 13px;
+}
+.scenario-group {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dfe4ea;
+  margin-bottom: 23px;
+}
+.scenario-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #dfe4ec;
+  border-radius: 10px;
+  padding: 11px 9px;
+  margin: 8px 0;
+  background: #ffffffb0;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.scenario-button:hover {
+  background: #edf3fc;
+  border-color: #cbdaf0;
+}
+.scenario-button.active {
+  background: #eef4ff;
+  border-color: #c2d5f6;
+}
+.scenario-letter {
+  font-size: 10px;
+  color: #8190a5;
+  background: #f0f3f7;
+  width: 23px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+.scenario-button.active .scenario-letter {
+  background: #dce9ff;
+  color: #1a73e8;
+}
+.scenario-button small {
+  display: block;
+  font-size: 9px;
+  line-height: 1.7;
+  color: #9aa3ae;
+  font-weight: 400;
+  margin-top: 3px;
+}
+.scenario-button > [data-icon] {
+  margin-left: auto;
+  color: #a9b0bb;
+}
+.scenario-button .icon {
+  width: 14px;
+  height: 14px;
+}
+.comparison-controls .control-row {
+  font-size: 11px;
+  margin-bottom: 16px;
+}
+.comparison-controls .control-row small {
+  font-size: 9px;
+  margin-top: 4px;
+}
+.offline-scenario-note {
+  font-size: 9px;
+  color: #9ba3ad;
+  line-height: 1.8;
+  margin: -7px 0 23px;
+}
+.settings-group {
+  border-bottom: 1px solid #dfe4ea;
+  padding-bottom: 20px;
+}
+.comparison-controls .interval-label {
+  font-size: 10px;
+  margin-top: 18px;
+}
+.comparison-controls .control-button {
+  font-size: 10px;
+}
+.comparison-status {
+  font-size: 10px;
+  color: #7d8b9e;
+  line-height: 1.8;
+  margin-top: 17px;
+  min-height: 36px;
+}
+.controls-note {
+  font-size: 9px;
+  color: #a0a7b1;
+  line-height: 1.9;
+  margin-top: 11px;
+}
+@media (min-width: 1500px) {
+  .comparison-layout {
+    gap: 48px;
+  }
+  .comparison-header {
+    max-width: 1140px;
+  }
+}
+@media (max-width: 1100px) {
+  .comparison-page {
+    padding: 17px 20px 20px;
+    gap: 17px;
+    --frame-height: min(850px, calc(100svh - 126px));
+  }
+  .comparison-layout {
+    gap: 23px;
+    grid-template-columns: minmax(0, 414px) minmax(0, 414px) 195px;
+  }
+  .phone-heading {
+    gap: 6px;
+  }
+  .phone-heading h2 {
+    font-size: 11px;
+  }
+  .app-location {
+    font-size: 8px;
+  }
+  .comparison-controls .control-row {
+    font-size: 10px;
+  }
+  .scenario-button {
+    padding-left: 7px;
+    padding-right: 7px;
+    gap: 7px;
+    font-size: 10px;
+  }
+  .scenario-button small {
+    font-size: 8px;
+  }
+  .scenario-letter {
+    width: 20px;
+  }
+  .comparison-brand h1 span {
+    display: none;
+  }
+}
+@media (max-width: 900px) {
+  .comparison-page {
+    --frame-height: min(800px, calc(100svh - 116px));
+  }
+  .comparison-layout {
+    grid-template-columns: minmax(0, 414px) minmax(0, 414px);
+    align-items: start;
+    gap: 20px;
+  }
+  .comparison-controls {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 28px;
+    max-width: 650px;
+    width: 100%;
+    margin: 12px auto 0;
+  }
+  .scenario-group {
+    border-bottom: 0;
+  }
+  .settings-group {
+    border-bottom: 0;
+  }
+  .comparison-status,
+  .controls-note {
+    grid-column: 1/-1;
+    margin-top: 0;
+  }
+  .comparison-header {
+    gap: 10px;
+  }
+  .simulation-label {
+    font-size: 9px;
+  }
+  .phone-heading h2 {
+    font-size: 12px;
+  }
+}
+@media (max-width: 620px) {
+  .comparison-page {
+    padding: 14px 16px 23px;
+    --frame-height: min(820px, calc(100svh - 146px));
+  }
+  .comparison-header {
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+  .comparison-brand h1 {
+    font-size: 14px;
+  }
+  .comparison-brand img {
+    width: 23px;
+    height: 23px;
+  }
+  .simulation-label {
+    margin-left: 0;
+    order: 3;
+    width: 100%;
+    font-size: 9px;
+  }
+  .reset-button {
+    margin-left: auto;
+    font-size: 10px;
+  }
+  .comparison-layout {
+    grid-template-columns: minmax(0, 414px);
+    gap: 27px;
+  }
+  .phone-heading h2 {
+    font-size: 12px;
+  }
+  .comparison-controls {
+    grid-column: 1;
+    gap: 0 19px;
+  }
+  .phone-shell {
+    border-radius: 33px;
+  }
+  .app-location {
+    font-size: 9px;
+  }
+}
+@media (max-height: 650px) and (min-width: 901px) {
+  .comparison-page {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    gap: 9px;
+    --frame-height: calc(100svh - 106px);
+  }
+  .scenario-group {
+    padding-bottom: 10px;
+    margin-bottom: 13px;
+  }
+  .scenario-button {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin: 6px 0;
+  }
+  .offline-scenario-note {
+    margin-bottom: 13px;
+  }
+  .comparison-controls .control-row {
+    margin-bottom: 12px;
+  }
+  .settings-group {
+    padding-bottom: 13px;
+  }
+  .comparison-status {
+    margin-top: 10px;
+  }
+  .controls-note {
+    margin-top: 4px;
+  }
+}

@@ -1,0 +1,304 @@
+/* iframe 안의 한 앱. 작은 세로 공간에서는 프레임이 아닌 화면 내부를 스크롤합니다. */
+html:has(.embedded),
+body.embedded {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
+}
+.embedded .device {
+  width: 100%;
+  height: 100svh;
+  max-height: none;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.embedded .calendar-screen {
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+.embedded .month-grid {
+  min-height: 240px;
+}
+.embedded .agenda {
+  min-height: 136px;
+  max-height: 155px;
+  overflow: auto;
+  padding-bottom: 25px;
+}
+.embedded .detail-hero {
+  height: 125px;
+}
+.embedded .detail-card {
+  min-height: calc(100% - 125px);
+}
+.external-map-link {
+  margin-top: 14px;
+  font-size: 12px;
+  padding: 9px 13px;
+}
+.external-screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  animation: slide-in 0.2s ease-out;
+  overflow: hidden;
+}
+.external-appbar {
+  display: flex;
+  align-items: center;
+  padding: 9px 14px;
+  border-bottom: 1px solid #e8ecf1;
+  flex-shrink: 0;
+}
+.return-calendar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #1a73e8;
+  font-size: 12px;
+  padding: 6px 0;
+}
+.return-calendar .icon {
+  width: 18px;
+  height: 18px;
+}
+.external-appbar > span {
+  color: #a0a7af;
+  font-size: 10px;
+  margin-left: auto;
+}
+.maps-scroll {
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 0 16px 29px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+.external-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0 13px;
+}
+.external-brand h1 {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+  color: #515960;
+}
+.external-brand .icon {
+  width: 24px;
+  height: 24px;
+  color: #4285f4;
+}
+.maps-screen .map-viewport {
+  height: 245px;
+}
+.maps-screen .map-wrap {
+  margin-top: 0;
+}
+.maps-screen .map-hint {
+  font-size: 9px;
+}
+.maps-screen .place-card {
+  margin-top: 14px;
+}
+.maps-screen .place-card h3 {
+  font-size: 17px;
+}
+.maps-screen .place-card .secondary {
+  font-size: 11px;
+}
+.drive-brand {
+  padding: 14px 20px;
+  border-bottom: 1px solid #e9ecf1;
+  flex-shrink: 0;
+}
+.drive-brand h1 {
+  font-size: 18px;
+}
+.drive-documentbar {
+  padding: 13px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  background: #f7f9fc;
+  border-bottom: 1px solid #e9edf3;
+}
+.drive-documentbar strong {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.drive-documentbar small {
+  font-size: 9px;
+  color: #939da9;
+  display: block;
+  margin-top: 3px;
+}
+.external-document {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  background: #f0f2f5;
+}
+.drive-offline {
+  flex: 1;
+  padding: 35px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 15px;
+  color: #8c96a4;
+}
+.drive-offline > .icon {
+  width: 38px;
+  height: 38px;
+  stroke-width: 1.4;
+}
+.drive-offline h2 {
+  font-size: 19px;
+  font-weight: 450;
+  color: #485363;
+}
+.drive-offline p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #8a95a3;
+}
+.drive-offline .text-button {
+  margin-top: 8px;
+}
+.embedded .offline-banner {
+  font-size: 10px;
+  min-height: 30px;
+}
+@media (max-height: 690px) {
+  .embedded .detail-hero {
+    height: 98px;
+  }
+  .embedded .detail-card {
+    min-height: calc(100% - 98px);
+  }
+  .embedded .agenda {
+    min-height: 126px;
+    max-height: 136px;
+    padding-top: 10px;
+  }
+  .embedded .app-header {
+    min-height: 60px;
+  }
+  .embedded .month-strip {
+    min-height: 49px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+  .embedded .month-grid {
+    min-height: 312px;
+  }
+  .embedded .calendar-cell {
+    padding: 2px;
+  }
+  .embedded .day-number {
+    width: 21px;
+    height: 21px;
+    font-size: 11px;
+    margin-bottom: 1px;
+  }
+  .embedded .month-event {
+    font-size: 9px;
+    min-height: 12px;
+    max-height: 12px;
+    line-height: 12px;
+    margin-top: 1px;
+  }
+  .embedded .event-overflow {
+    position: absolute;
+    top: 5px;
+    right: 3px;
+    font-size: 8px;
+    padding: 0;
+  }
+  .embedded .maps-screen .map-viewport {
+    height: 215px;
+  }
+}
+@media (max-width: 350px) {
+  .embedded .app-header {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+  .embedded .header-left {
+    gap: 9px;
+  }
+  .embedded .header-tools {
+    gap: 7px;
+  }
+  .embedded .header-pill .icon-button {
+    width: 33px;
+  }
+  .embedded .month-title {
+    font-size: 21px;
+  }
+  .embedded .detail-card {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+  .embedded .detail-row {
+    gap: 10px;
+    grid-template-columns: 25px minmax(0, 1fr);
+  }
+  .embedded .detail-title {
+    font-size: 22px;
+  }
+  .embedded .agenda {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .embedded .agenda-event {
+    gap: 9px;
+    padding-right: 43px;
+  }
+  .embedded .event-time {
+    width: 40px;
+    font-size: 9px;
+  }
+  .embedded .agenda-event h3 {
+    font-size: 11px;
+  }
+  .embedded .agenda-event p {
+    font-size: 9px;
+  }
+  .embedded .map-hint {
+    font-size: 8px;
+  }
+  .embedded .map-actions {
+    gap: 2px;
+  }
+  .embedded .map-actions .text-button {
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+  .embedded .form-section {
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 12px;
+  }
+  .embedded .editor-title {
+    padding-left: 55px;
+    font-size: 23px;
+  }
+  .embedded .event-type-tabs {
+    padding-left: 55px;
+  }
+}

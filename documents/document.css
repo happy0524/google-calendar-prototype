@@ -1,0 +1,141 @@
+:root {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic",
+    Arial, sans-serif;
+  color: #303943;
+  font-size: 13px;
+  line-height: 1.85;
+  background: #f0f2f5;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 17px 12px 26px;
+}
+.paper {
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 27px 24px 35px;
+  background: #fff;
+  min-height: 640px;
+  box-shadow: 0 1px 5px #2021240d;
+  border: 1px solid #e5e8ed;
+}
+.eyebrow {
+  color: #4285f4;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  font-weight: 650;
+  margin-bottom: 16px;
+}
+h1 {
+  font-size: 25px;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+h2 {
+  font-size: 15px;
+  letter-spacing: -0.2px;
+  margin: 27px 0 9px;
+  font-weight: 600;
+}
+p {
+  margin: 0 0 11px;
+}
+.meta {
+  font-size: 10px;
+  color: #8a929b;
+  line-height: 1.8;
+  border-bottom: 1px solid #e6eaf0;
+  padding-bottom: 19px;
+  margin-bottom: 20px;
+}
+.intro {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #6c7886;
+}
+.callout {
+  background: #eff5ff;
+  border-left: 3px solid #4285f4;
+  border-radius: 0 6px 6px 0;
+  padding: 13px 14px;
+  font-size: 11px;
+  color: #506883;
+  margin: 19px 0;
+}
+ol,
+ul {
+  padding-left: 19px;
+  margin: 8px 0;
+}
+li {
+  padding: 3px 0;
+  font-size: 12px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+  margin: 12px 0;
+}
+th {
+  text-align: left;
+  background: #f3f6fa;
+  color: #748193;
+  font-weight: 500;
+}
+th,
+td {
+  padding: 9px 7px;
+  border-bottom: 1px solid #e7ebf0;
+  vertical-align: top;
+}
+.checklist {
+  list-style: none;
+  padding: 0;
+}
+.checklist li {
+  padding-left: 22px;
+  position: relative;
+}
+.checklist li:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 11px;
+  height: 11px;
+  border: 1px solid #b7c7df;
+  border-radius: 2px;
+}
+.footer {
+  border-top: 1px solid #e6eaf0;
+  color: #a2a9b1;
+  font-size: 9px;
+  margin-top: 32px;
+  padding-top: 12px;
+}
+.tag {
+  font-size: 9px;
+  background: #e8f0fe;
+  color: #4972ae;
+  padding: 3px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+@media (max-width: 350px) {
+  .paper {
+    padding: 23px 18px;
+  }
+  body {
+    padding: 12px 8px;
+  }
+  h1 {
+    font-size: 23px;
+  }
+}

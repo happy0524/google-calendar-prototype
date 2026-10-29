@@ -1,0 +1,7 @@
+# Local OS files
+.DS_Store
+Thumbs.db
+
+# Reference PDFs and screenshots are not application assets.
+# Runtime documents belong in documents/; all reference material stays local.
+/references/

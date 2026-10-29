@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f6f8" />
+    <meta
+      name="description"
+      content="Google Calendar As-Is / To-Be 좌우 비교 발표 프로토타입"
+    />
+    <title>Google Calendar · As-Is / To-Be 비교</title>
+    <link rel="icon" href="./assets/calendar.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/comparison.css" />
+    <script defer src="./js/icons.js"></script>
+    <script defer src="./js/comparison.js"></script>
+  </head>
+  <body class="comparison-page">
+    <header class="comparison-header">
+      <div class="comparison-brand">
+        <img src="./assets/calendar.svg" width="27" height="27" alt="" />
+        <h1>Google Calendar <span>사용 흐름 비교</span></h1>
+      </div>
+      <span class="simulation-label"><i></i> 발표용 모의 동작</span>
+      <button id="reset-demo" class="reset-button">
+        <span data-icon="reset"></span>전체 초기화
+      </button>
+    </header>
+    <main class="comparison-layout">
+      <section class="phone-column" aria-labelledby="asis-heading">
+        <header class="phone-heading">
+          <span class="mode-tag">As-Is</span>
+          <h2 id="asis-heading">기존 Google Calendar</h2>
+          <span class="app-location" id="asis-location">Calendar</span>
+        </header>
+        <div class="phone-shell">
+          <iframe
+            id="asis-frame"
+            name="asis"
+            src="./phone.html?mode=asis"
+            title="As-Is 기존 Google Calendar"
+            loading="eager"
+          ></iframe>
+        </div>
+      </section>
+      <section class="phone-column tobe-column" aria-labelledby="tobe-heading">
+        <header class="phone-heading">
+          <span class="mode-tag improved-tag">To-Be</span>
+          <h2 id="tobe-heading">개선된 Google Calendar</h2>
+          <span class="app-location" id="tobe-location">Calendar</span>
+        </header>
+        <div class="phone-shell">
+          <iframe
+            id="tobe-frame"
+            name="tobe"
+            src="./phone.html?mode=tobe"
+            title="To-Be 개선된 Google Calendar"
+            loading="eager"
+          ></iframe>
+        </div>
+      </section>
+      <aside class="comparison-controls" aria-label="공통 발표 제어">
+        <div class="scenario-group">
+          <p class="panel-heading">비교 시나리오</p>
+          <button class="scenario-button" data-scenario="map">
+            <span class="scenario-letter">A</span
+            ><span>지도 비교 시작<small>앱 전환과 일정 안에서 확인</small></span
+            ><span data-icon="chevron"></span>
+          </button>
+          <button class="scenario-button" data-scenario="attachment">
+            <span class="scenario-letter">B</span
+            ><span
+              >첨부파일 비교 시작<small
+                >Drive 이동과 내부 문서 열람</small
+              ></span
+            ><span data-icon="chevron"></span>
+          </button>
+          <button class="scenario-button" data-scenario="ai">
+            <span class="scenario-letter">C</span
+            ><span>AI 제안 비교 시작<small>직접 수정과 선제적 제안</small></span
+            ><span data-icon="chevron"></span>
+          </button>
+        </div>
+        <div class="settings-group">
+          <label class="control-row"
+            ><span>오프라인 시연<small>양쪽 화면에 함께 적용</small></span
+            ><span class="switch"
+              ><input
+                id="offline-toggle"
+                type="checkbox"
+                aria-label="공통 오프라인 시연" /><span></span></span
+          ></label>
+          <p class="offline-scenario-note">
+            왼쪽은 Drive에서 파일을 별도로<br />오프라인 저장하지 않은
+            상황입니다.
+          </p>
+          <label class="control-row"
+            ><span>오른쪽 AI 자동 제안</span
+            ><span class="switch"
+              ><input
+                id="auto-toggle"
+                type="checkbox"
+                aria-label="오른쪽 AI 자동 제안" /><span></span></span
+          ></label>
+          <label class="interval-label" for="suggestion-interval"
+            >제안 간격<select id="suggestion-interval">
+              <option value="15">15초</option>
+              <option value="30" selected>30초</option>
+              <option value="60">60초</option>
+              <option value="90">90초</option>
+            </select></label
+          >
+          <button id="suggest-now" class="control-button primary-outline">
+            <span data-icon="sparkles"></span>지금 AI 제안 띄우기
+          </button>
+        </div>
+        <p
+          id="comparison-status"
+          class="comparison-status"
+          role="status"
+          aria-live="polite"
+        >
+          같은 일정에서 두 사용 흐름을 비교하세요.
+        </p>
+        <p class="controls-note">
+          일정과 저장 상태는 서로 독립적입니다.<br />실제 계정·외부 서비스와
+          연결되지 않습니다.
+        </p>
+      </aside>
+    </main>
+  </body>
+</html>
